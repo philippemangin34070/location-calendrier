@@ -16,9 +16,13 @@ def is_available(start, end):
             return False
     return True
 
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
 @app.route("/")
 def home():
-    return "<h1>Calendrier de réservation</h1><p>API en ligne</p>"
+    return render_template("index.html")
 
 @app.route("/book", methods=["POST"])
 def book():
