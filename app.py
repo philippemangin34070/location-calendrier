@@ -21,3 +21,4 @@ SUMMARY:Réservation test
 END:VEVENT
 END:VCALENDAR"""
     return Response(ical, mimetype="text/calendar")
+
