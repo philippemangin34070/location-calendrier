@@ -43,6 +43,25 @@
                 locale: 'fr',
                 height: 'auto'
             });
+                    events: async function(fetchInfo, successCallback, failureCallback) {
+            try {
+                const response = await fetch('/import-airbnb');
+                const data = await response.json();
+
+                const events = data.reservations.map(ev => ({
+                    title: ev.summary,
+                    start: ev.start,
+                    end: ev.end,
+                    color: '#ff4d4d',   // rouge Airbnb
+                    display: 'block'
+                }));
+
+                successCallback(events);
+            } catch (error) {
+                failureCallback(error);
+            }
+        },
+
 
             calendar.render();
         });
