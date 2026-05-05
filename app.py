@@ -4,6 +4,7 @@ from icalendar import Calendar
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -89,6 +90,10 @@ def import_airbnb_app2():
             })
 
     return {"reservations": reservations}
+@app.route('/')
+def home():
+    return render_template('index.html')
+
 @app.route('/calendrier1')
 def calendrier1():
     return render_template('calendrier1.html')
@@ -97,7 +102,4 @@ def calendrier1():
 def calendrier2():
     return render_template('calendrier2.html')
 
-@app.route('/')
-def home():
-    return render_template('index.html')
 
