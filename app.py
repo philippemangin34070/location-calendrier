@@ -4,7 +4,6 @@ from icalendar import Calendar
 
 app = Flask(__name__)
 
-
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -40,13 +39,10 @@ def import_airbnb():
             })
 
     return {"reservations": events}
+
 @app.route('/import-airbnb-app1')
 def import_airbnb_app1():
-    import requests
-    from icalendar import Calendar
-
     url = "https://www.airbnb.fr/calendar/ical/1408690958278432453.ics?t=a818b992302442ebbba047191301735f"
-
     r = requests.get(url)
     cal = Calendar.from_ical(r.text)
 
@@ -64,15 +60,10 @@ def import_airbnb_app1():
             })
 
     return {"reservations": reservations}
-
 
 @app.route('/import-airbnb-app2')
 def import_airbnb_app2():
-    import requests
-    from icalendar import Calendar
-
     url = "https://www.airbnb.fr/calendar/ical/1421524208515391594.ics?t=dd3c5e79416d4e0392881fcf9b0bde58"
-
     r = requests.get(url)
     cal = Calendar.from_ical(r.text)
 
@@ -90,9 +81,6 @@ def import_airbnb_app2():
             })
 
     return {"reservations": reservations}
-@app.route('/')
-def home():
-    return render_template('index.html')
 
 @app.route('/calendrier1')
 def calendrier1():
@@ -101,5 +89,6 @@ def calendrier1():
 @app.route('/calendrier2')
 def calendrier2():
     return render_template('calendrier2.html')
+
 
 
