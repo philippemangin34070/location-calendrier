@@ -2,64 +2,43 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Calendrier de réservation</title>
-
-    <!-- FullCalendar CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+    <title>Accueil – Calendriers</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            text-align: center;
+            margin-top: 80px;
         }
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
+
+        h1 {
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 20px 40px;
+            margin: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            background-color: #4d79ff;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #3558cc;
         }
     </style>
 </head>
 <body>
 
-<h1>Calendrier de réservation</h1>
+<h1>Choisissez un calendrier</h1>
 
-<div id="calendar"></div>
-
-<!-- FullCalendar JS -->
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'fr',
-
-        events: async function(fetchInfo, successCallback, failureCallback) {
-    try {
-        const response = await fetch('/import-airbnb');
-        const data = await response.json();
-
-        const events = data.reservations.map(ev => ({
-            title: ev.summary,
-            start: new Date(ev.start).toISOString().split('T')[0],
-            end: new Date(ev.end).toISOString().split('T')[0],
-            color: '#ff4d4d',
-            display: 'block'
-        }));
-
-        successCallback(events);
-    } catch (error) {
-        failureCallback(error);
-    }
-}
-
-    });
-
-    calendar.render();
-});
-</script>
+<a class="btn" href="/calendrier1">Voir Jardin d’Eden 133</a>
+<a class="btn" href="/calendrier2">Voir Jardin d’Eden 206</a>
 
 </body>
 </html>

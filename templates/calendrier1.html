@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendrier – Jardin d’Eden 133</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+</head>
+<body>
+
+<h1>Calendrier – Jardin d’Eden 133</h1>
+<div id="calendar"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+
+    var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+        initialView: 'dayGridMonth',
+        locale: 'fr',
+
+        events: async function(fetchInfo, successCallback, failureCallback) {
+            try {
+                const response = await fetch('/import-airbnb-app1');
+                const data = await response.json();
+
+                const events = data.reservations.map(ev => ({
+                    title: ev.summary,
+                    start: new Date(ev.start).toISOString().split('T')[0],
+                    end: new Date(ev.end).toISOString().split('T')[0],
+                    color: '#ff4d4d'
+                }));
+
+                successCallback(events);
+            } catch (error) {
+                failureCallback(error);
+            }
+        }
+    });
+
+    calendar.render();
+});
+</script>
+
+</body>
+</html>
