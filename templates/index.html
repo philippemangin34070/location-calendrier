@@ -37,23 +37,24 @@ document.addEventListener('DOMContentLoaded', function() {
         locale: 'fr',
 
         events: async function(fetchInfo, successCallback, failureCallback) {
-            try {
-                const response = await fetch('/import-airbnb');
-                const data = await response.json();
+    try {
+        const response = await fetch('/import-airbnb');
+        const data = await response.json();
 
-                const events = data.reservations.map(ev => ({
-                    title: ev.summary,
-                    start: ev.start,
-                    end: ev.end,
-                    color: '#ff4d4d',   /* rouge Airbnb */
-                    display: 'block'
-                }));
+        const events = data.reservations.map(ev => ({
+            title: ev.summary,
+            start: new Date(ev.start).toISOString().split('T')[0],
+            end: new Date(ev.end).toISOString().split('T')[0],
+            color: '#ff4d4d',
+            display: 'block'
+        }));
 
-                successCallback(events);
-            } catch (error) {
-                failureCallback(error);
-            }
-        }
+        successCallback(events);
+    } catch (error) {
+        failureCallback(error);
+    }
+}
+
     });
 
     calendar.render();
