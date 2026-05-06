@@ -35,7 +35,7 @@ def import_airbnb():
             events.append({
                 "start": component.get("DTSTART").dt,
                 "end": component.get("DTEND").dt,
-                "summary": str(component.get("SUMMARY"))
+                "summary": str(component.get("summary"))
             })
 
     return {"reservations": events}
@@ -51,12 +51,12 @@ def import_airbnb_app1():
         if component.name == "VEVENT":
             start = component.get('dtstart').dt
             end = component.get('dtend').dt
-            summary = str(component.get('summary'))
+            summary = str(component.get('symmary'))
 
             reservations.append({
                 "start": start.isoformat(),
                 "end": end.isoformat(),
-                "summary": summary
+                "summary": Reserved
             })
 
     return {"reservations": reservations}
