@@ -1,50 +1,45 @@
-@app.route('/import-airbnb-app1')
-def import_airbnb_app1():
-    import requests
-    from icalendar import Calendar
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendrier – Jardin d’Eden 206</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+</head>
+<body>
 
-    url = "https://www.airbnb.fr/calendar/ical/1408690958278432453.ics?t=a818b992302442ebbba047191301735f"
+<h1>Calendrier – Jardin d’Eden 206</h1>
+<div id="calendar"></div>
 
-    r = requests.get(url)
-    cal = Calendar.from_ical(r.text)
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
 
-    reservations = []
-    for component in cal.walk():
-        if component.name == "VEVENT":
-            start = component.get('dtstart').dt
-            end = component.get('dtend').dt
-            summary = str(component.get('summary'))
+    var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+        initialView: 'dayGridMonth',
+        locale: 'fr',
 
-            reservations.append({
-                "start": start.isoformat(),
-                "end": end.isoformat(),
-                "summary": summary
-            })
+        events: async function(fetchInfo, successCallback, failureCallback) {
+            try {
+                const response = await fetch('/import-airbnb-app2');
+                const data = await response.json();
 
-    return {"reservations": reservations}
+                const events = data.reservations.map(ev => ({
+                    title: ev.summary,
+                    start: new Date(ev.start).toISOString().split('T')[0],
+                    end: new Date(ev.end).toISOString().split('T')[0],
+                    color: '#ff4d4d'
+                }));
 
+                successCallback(events);
+            } catch (error) {
+                failureCallback(error);
+            }
+        }
+    });
 
-@app.route('/import-airbnb-app2')
-def import_airbnb_app2():
-    import requests
-    from icalendar import Calendar
+    calendar.render();
+});
+</script>
 
-    url = "https://www.airbnb.fr/calendar/ical/1421524208515391594.ics?t=dd3c5e79416d4e0392881fcf9b0bde58"
-
-    r = requests.get(url)
-    cal = Calendar.from_ical(r.text)
-
-    reservations = []
-    for component in cal.walk():
-        if component.name == "VEVENT":
-            start = component.get('dtstart').dt
-            end = component.get('dtend').dt
-            summary = str(component.get('summary'))
-
-            reservations.append({
-                "start": start.isoformat(),
-                "end": end.isoformat(),
-                "summary": summary
-            })
-
-    return {"reservations": reservations}
+</body>
+</html>
