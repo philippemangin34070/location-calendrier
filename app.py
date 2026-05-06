@@ -51,12 +51,12 @@ def import_airbnb_app1():
         if component.name == "VEVENT":
             start = component.get('dtstart').dt
             end = component.get('dtend').dt
-            summary = str(component.get('symmary'))
+            summary = str(component.get('summary'))
 
             reservations.append({
                 "start": start.isoformat(),
                 "end": end.isoformat(),
-                "summary": Reserved
+                "summary": "Reserved"
             })
 
     return {"reservations": reservations}
@@ -77,7 +77,7 @@ def import_airbnb_app2():
             reservations.append({
                 "start": start.isoformat(),
                 "end": end.isoformat(),
-                "summary": summary
+                "summary": "Reserved"
             })
 
     return {"reservations": reservations}
