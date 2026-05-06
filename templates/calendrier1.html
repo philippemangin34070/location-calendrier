@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
         initialView: 'dayGridMonth',
         locale: 'fr',
+        height: 500,
 
         events: async function(fetchInfo, successCallback, failureCallback) {
             try {
