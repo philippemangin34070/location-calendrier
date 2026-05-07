@@ -9,7 +9,6 @@
 
 <h1>Calendrier – Jardin d’Eden 133</h1>
 
-<!-- Bouton retour -->
 <a href="/" style="
     display:inline-block;
     margin-bottom:20px;
@@ -21,7 +20,6 @@
     font-weight:bold;
 ">← Retour à l’accueil</a>
 
-<!-- Bouton Airbnb -->
 <a href="https://www.airbnb.fr/rooms/1408690958278432453"
    target="_blank"
    style="
@@ -45,9 +43,19 @@
 document.addEventListener('DOMContentLoaded', async function() {
 
     var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
-        initialView: 'dayGridMonth',
+
         locale: 'fr',
-        height: 500,
+        height: 700,
+
+        views: {
+            twoMonth: {
+                type: 'dayGridMonth',
+                duration: { months: 2 },
+                buttonText: '2 mois'
+            }
+        },
+
+        initialView: 'twoMonth',
 
         events: async function(fetchInfo, successCallback, failureCallback) {
             try {
@@ -55,10 +63,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const data = await response.json();
 
                 const events = data.reservations.map(ev => ({
-                    title: ev.title,
                     start: ev.start,
                     end: ev.end,
-                    color: '#ff4d4d'
+                    display: 'background',
+                    backgroundColor: '#ff4d4d'
                 }));
 
                 successCallback(events);
@@ -74,3 +82,4 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 </body>
 </html>
+
