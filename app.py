@@ -13,7 +13,6 @@ def home():
     return render_template("index.html")
 
 
-
 # ------------------------------
 # IMPORT AIRBNB APPARTEMENT 133
 # ------------------------------
