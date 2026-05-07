@@ -8,6 +8,8 @@
 <body>
 
 <h1>Calendrier – Jardin d’Eden 206</h1>
+
+<!-- Bouton retour -->
 <a href="/" style="
     display:inline-block;
     margin-bottom:20px;
@@ -18,7 +20,9 @@
     border-radius:8px;
     font-weight:bold;
 ">← Retour à l’accueil</a>
-<a href="https://www.airbnb.fr/rooms/1408690958278432453"
+
+<!-- Bouton Airbnb -->
+<a href="https://www.airbnb.fr/rooms/1421524208515391594"
    target="_blank"
    style="
     display:inline-block;
@@ -30,21 +34,20 @@
     border-radius:8px;
     font-weight:bold;
 ">
-    🏡 Réserver via Airbnb
+    🏡 Voir l’annonce Airbnb
 </a>
-
-
 
 <div id="calendar"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', async function() {
 
     var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
         initialView: 'dayGridMonth',
         locale: 'fr',
-        height: 400,
+        height: 500,
 
         events: async function(fetchInfo, successCallback, failureCallback) {
             try {
@@ -52,9 +55,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const data = await response.json();
 
                 const events = data.reservations.map(ev => ({
-                    title: ev.summary,
-                    start: new Date(ev.start).toISOString().split('T')[0],
-                    end: new Date(ev.end).toISOString().split('T')[0],
+                    title: ev.title,
+                    start: ev.start,
+                    end: ev.end,
                     color: '#ff4d4d'
                 }));
 
@@ -67,10 +70,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     calendar.render();
 });
-<a href="https://www.airbnb.fr/rooms/1421524208515391594" target="_blank">
-    <button>Voir l’annonce Airbnb</button>
-</a>
-
 </script>
 
 </body>
