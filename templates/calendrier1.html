@@ -4,6 +4,31 @@
     <meta charset="UTF-8">
     <title>Calendrier – Jardin d’Eden 133</title>
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+
+    <style>
+        /* Conteneur du calendrier */
+        #calendar {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        /* Réduit la hauteur des cases */
+        .fc-daygrid-day-frame {
+            height: 40px !important;
+            padding: 0 !important;
+        }
+
+        /* Réduit la hauteur des lignes */
+        .fc-daygrid-body tr {
+            height: 40px !important;
+        }
+
+        /* Réduit la taille du texte */
+        .fc-daygrid-day-number {
+            font-size: 12px;
+            padding: 2px !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -45,7 +70,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
 
         locale: 'fr',
-        height: 200,
 
         views: {
             twoMonth: {
@@ -82,4 +106,3 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 </body>
 </html>
-
