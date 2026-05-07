@@ -1,7 +1,6 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template
 import requests
-from icalendar import Calendar, Event
-from datetime import datetime
+from icalendar import Calendar
 
 app = Flask(__name__)
 
@@ -25,13 +24,10 @@ def import_airbnb_app1():
     reservations = []
     for component in cal.walk():
         if component.name == "VEVENT":
-            start = component.get('dtstart').dt
-            end = component.get('dtend').dt
-
             reservations.append({
-                "start": start.isoformat(),
-                "end": end.isoformat(),
-                "summary": "Reserved"
+                "start": component.get('dtstart').dt.isoformat(),
+                "end": component.get('dtend').dt.isoformat(),
+                "title": "Reserved"
             })
 
     return {"reservations": reservations}
@@ -49,13 +45,10 @@ def import_airbnb_app2():
     reservations = []
     for component in cal.walk():
         if component.name == "VEVENT":
-            start = component.get('dtstart').dt
-            end = component.get('dtend').dt
-
             reservations.append({
-                "start": start.isoformat(),
-                "end": end.isoformat(),
-                "summary": "Reserved"
+                "start": component.get('dtstart').dt.isoformat(),
+                "end": component.get('dtend').dt.isoformat(),
+                "title": "Reserved"
             })
 
     return {"reservations": reservations}
@@ -71,53 +64,3 @@ def calendrier1():
 @app.route('/calendrier2')
 def calendrier2():
     return render_template('calendrier2.html')
-
-
-# ------------------------------
-# EXPORT ICAL APPARTEMENT 133 (.ics)
-# ------------------------------
-@app.route('/export-ical-app1.ics')
-def export_ical_app1_ics():
-    data = requests.get("https://location-calendrier-1.onrender.com/import-airbnb-app1").json()
-    reservations = data.get("reservations", [])
-
-    cal = Calendar()
-    cal.add('prodid', '-//Jardin dEden 133//mxm.dk//')
-    cal.add('version', '2.0')
-
-    for r in reservations:
-        event = Event()
-        event.add('summary', 'Reserved')
-        event.add('dtstart', datetime.fromisoformat(r["start"]))
-        event.add('dtend', datetime.fromisoformat(r["end"]))
-        cal.add_component(event)
-
-    return cal.to_ical(), 200, {
-        'Content-Type': 'text/calendar',
-        'Content-Disposition': 'attachment; filename="appartement133.ics"'
-    }
-
-
-# ------------------------------
-# EXPORT ICAL APPARTEMENT 206 (.ics)
-# ------------------------------
-@app.route('/export-ical-app2.ics')
-def export_ical_app2_ics():
-    data = requests.get("https://location-calendrier-1.onrender.com/import-airbnb-app2").json()
-    reservations = data.get("reservations", [])
-
-    cal = Calendar()
-    cal.add('prodid', '-//Jardin dEden 206//mxm.dk//')
-    cal.add('version', '2.0')
-
-    for r in reservations:
-        event = Event()
-        event.add('summary', 'Reserved')
-        event.add('dtstart', datetime.fromisoformat(r["start"]))
-        event.add('dtend', datetime.fromisoformat(r["end"]))
-        cal.add_component(event)
-
-    return cal.to_ical(), 200, {
-        'Content-Type': 'text/calendar',
-        'Content-Disposition': 'attachment; filename="appartement206.ics"'
-    }
